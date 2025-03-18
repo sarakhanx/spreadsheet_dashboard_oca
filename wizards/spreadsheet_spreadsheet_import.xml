@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 CreuBlanca
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="spreadsheet_spreadsheet_import_form_view">
+        <field name="name">spreadsheet.spreadsheet.import.form (in spreadsheet_dashboard_oca)</field>
+        <field name="model">spreadsheet.spreadsheet.import</field>
+        <field name="inherit_id" ref="spreadsheet_oca.spreadsheet_spreadsheet_import_form_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <!-- ลบ attrs ออกไปเนื่องจากไม่รองรับใน Odoo 17  ซึ่งไม่รู้วาอนาคตจะมีปัญหาอะไรไหม-->
+            </field>
+            <field name="spreadsheet_id" position="after">
+                <field
+                    name="dashboard_id"
+                    domain="[('can_edit', '=', True)]"
+                    options="{'no_create': True}"
+                    invisible="context.get('mode') not in ['dashboard', 'dashboard_sheet']"
+                    required="context.get('mode') in ['dashboard', 'dashboard_sheet']"
+                />
+                <field
+                    name="dashboard_group_id"
+                    options="{'no_create': True}"
+                    invisible="context.get('mode') != 'dashboard_spreadsheet'"
+                    required="context.get('mode') == 'dashboard_spreadsheet'"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>
